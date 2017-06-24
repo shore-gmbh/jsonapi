@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'jsonapi'
   spec.version       = Jsonapi::VERSION
   spec.authors       = ['Thiago Rodrigues de Paula']
-  spec.email         = ['thiago.rdp@gmail.com']
+  spec.email         = ['contact@shore.com']
 
   spec.summary       = 'A clean implementation o jsonapi serializers.'
   spec.description   = 'A clean implementation o jsonapi serializers.'
