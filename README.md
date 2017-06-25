@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/shore-gmbh/jsonapi.svg?branch=master)](https://travis-ci.org/shore-gmbh/jsonapi)
 [![Code Climate](https://codeclimate.com/github/shore-gmbh/jsonapi/badges/gpa.svg)](https://codeclimate.com/github/shore-gmbh/jsonapi)
+[![Test Coverage](https://codeclimate.com/github/shore-gmbh/jsonapi/badges/coverage.svg)](https://codeclimate.com/github/shore-gmbh/jsonapi/coverage)
 
 ## Installation
 
