@@ -49,6 +49,33 @@ RSpec.describe Jsonapi::ResourceSerializer do
         )
       )
     end
+
+    it 'serializes relationships' do
+      schema = build_schema(
+        relationships: {
+          user: { type: :users, cardinality: :has_one },
+          posts: { type: :posts, cardinality: :has_many }
+        }
+      )
+      data = valid_data(user_id: 1, posts_ids: [1, 2])
+      subject = build_serializer(schema: schema)
+
+      serialized = subject.serialize(data)
+
+      expect(serialized).to match(
+        a_hash_including(
+          relationships: {
+            user: { data: { type: :users, id: 1 } },
+            posts: {
+              data: [
+                { type: :posts, id: 1 },
+                { type: :posts, id: 2 }
+              ]
+            }
+          }
+        )
+      )
+    end
   end
 
   def build_serializer(override = {})
@@ -59,11 +86,15 @@ RSpec.describe Jsonapi::ResourceSerializer do
     { id: 1 }.merge(override)
   end
 
-  def build_schema(attributes: [], type: :posts)
+  def build_schema(attributes: [], type: :posts, relationships: {})
     Class.new(Jsonapi::Schema) do
       type type
 
       attributes.each { |attr| attribute attr }
+
+      relationships.each do |(name, conf)|
+        send(conf[:cardinality], name, type: conf[:type])
+      end
     end.new
   end
 
