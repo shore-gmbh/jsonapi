@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'A clean implementation o jsonapi serializers.'
   spec.description   = 'A clean implementation o jsonapi serializers.'
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = 'https://github.com/shore-gmbh/jsonapi'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
