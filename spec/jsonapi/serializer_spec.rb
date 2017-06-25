@@ -1,5 +1,7 @@
 require 'spec_helper'
+
 require 'jsonapi/serializer'
+require 'jsonapi/schema'
 
 RSpec.describe Jsonapi::Serializer do
   describe '#id' do
@@ -60,13 +62,46 @@ RSpec.describe Jsonapi::Serializer do
     end
   end
 
+  describe '#relationships' do
+    it 'returns a hash' do
+      subject = build_serializer
+
+      relationships = subject.relationships
+
+      expect(relationships).to be_a(Hash)
+    end
+
+    it 'maps uses the relationship names + _id(s) from the data object' do
+      schema = Class.new(Jsonapi::Schema) do
+        has_one :user, type: :users
+        has_many :posts, type: :posts
+      end
+      data = { user_id: 1, posts_ids: [3, 4] }
+      subject = build_serializer(schema: schema.new, data: data)
+
+      relationships = subject.relationships
+
+      expect(relationships).to eq(
+        user: {
+          data: { type: :users, id: 1 }
+        },
+        posts: {
+          data: [
+            { type: :posts, id: 3 },
+            { type: :posts, id: 4 }
+          ]
+        }
+      )
+    end
+  end
+
   def build_serializer(override = {})
     described_class.new(default_serializer_params.merge(override))
   end
 
   def default_serializer_params
     {
-      schema: double(attributes: []),
+      schema: Class.new(Jsonapi::Schema).new,
       data: {}
     }
   end
