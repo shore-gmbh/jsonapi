@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-require 'jsonapi/serializer'
+require 'jsonapi/resource_serializer'
 require 'jsonapi/schema'
 
 RSpec.describe Jsonapi::ResourceSerializer do
